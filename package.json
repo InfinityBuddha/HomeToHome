@@ -1,0 +1,23 @@
+{
+  "name": "hometohome",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InfinityBuddha/HomeToHome.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/InfinityBuddha/HomeToHome/issues"
+  },
+  "homepage": "https://github.com/InfinityBuddha/HomeToHome#readme",
+  "devDependencies": {
+    "webpack": "^4.28.3",
+    "webpack-dev-server": "^3.1.14"
+  }
+}
