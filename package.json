@@ -2,9 +2,11 @@
   "name": "hometohome",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development  --hot"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   "homepage": "https://github.com/InfinityBuddha/HomeToHome#readme",
   "devDependencies": {
     "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.0",
     "webpack-dev-server": "^3.1.14"
   }
 }
