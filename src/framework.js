@@ -1,7 +1,28 @@
 export function importFromBelow() {
     const TEXT_ELEMENT = "TEXT ELEMENT";
-    function render(element, parentDom) {
+    let rootInstance = null;
+
+    function render(element, container) {
+        const prevInstance = rootInstance;
+        const nextInstance = reconcile(container, prevInstance, element);
+        rootInstance = nextInstance;
+    }
+
+    function reconcile(parentDom, instance, element) {
+        if (instance == null) {
+            const newInstance = instantiate(element);
+            parentDom.appendChild(newInstance.dom);
+            return newInstance;
+        } else {
+            const newInstance = instantiate(element);
+            parentDom.replaceChild(newInstance.dom, instance.dom);
+            return newInstance;
+        }
+    }
+
+    function instantiate(element) {
         const { type, props } = element;
+
         // Create DOM element
         const isTextElement = type === TEXT_ELEMENT;
         const dom = isTextElement
@@ -20,25 +41,22 @@ export function importFromBelow() {
         Object.keys(props).filter(isAttribute).forEach(name => {
             dom[name] = props[name];
         });
-        // Render children
+
+        // Instantiate and append children
         const childElements = props.children || [];
-        childElements.forEach(childElement => render(childElement, dom));
-        console.log({parentDom}, {lastChild: parentDom.lastChild});
-        // Append to parent
-        if (parentDom.lastChild) {
-            parentDom.replaceChild(dom, parentDom.lastChild)
-        } else {
-            parentDom.appendChild(dom);
-        }
+        const childInstances = childElements.map(instantiate); // children ends show must go on
+        const childDoms = childInstances.map(childInstance => childInstance.dom);
+        childDoms.forEach(childDom => dom.appendChild(childDom));
+
+        const instance = { dom, element, childInstances };
+        return instance;
     }
 
     function createElement(type, config, ...args) {
         const props = Object.assign({}, config);
         const hasChildren = args.length > 0;
-        // create array with children
-        const rawChildren = hasChildren ? [].concat(...args) : [];
-        // write chlidren in props
-        props.children = rawChildren
+        const rawChildren = hasChildren ? [].concat(...args) : [];        // create array with children
+        props.children = rawChildren        // write chlidren in props
             .filter(c => c !== null && c !== false)
             .map(c => c instanceof Object ? c : createTextElement(c));
         return { type, props };
