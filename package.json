@@ -1,5 +1,5 @@
 {
-  "name": "hometohome",
+  "name": "tower-defense",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
@@ -20,7 +20,6 @@
   "homepage": "https://github.com/InfinityBuddha/HomeToHome#readme",
   "devDependencies": {
     "@babel/core": "^7.2.2",
-    "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@babel/preset-env": "^7.3.1",
     "babel-loader": "^8.0.5",
     "webpack": "^4.28.3",
