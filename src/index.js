@@ -18,21 +18,30 @@
         leftPressed: false
     };
 
-    function update() {
+    function update(tFrame) {
+        game.stopMain = tFrame;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (game.x + dx > canvas.width - game.ballRadius || game.x + dx < game.ballRadius) {
+        if(game.x + dx > canvas.width-game.ballRadius || game.x + dx < game.ballRadius) {
             dx = -dx;
         }
-
-        if (game.y + dy > canvas.height - game.ballRadius || game.y + dy < game.ballRadius) {
+        if(game.y + dy < game.ballRadius) {
             dy = -dy;
         }
+        else if(game.y + dy > canvas.height-game.ballRadius) {
+            console.log('sdfsdlfls');
+            if(game.x > game.paddleX && game.x < game.paddleX + game.paddleWidth) {
+                dy = -dy;
+            }
+            else {
+                gameOver()
+            }
+        }
 
-        if (game.rightPressed) {
+        if (game.rightPressed && game.paddleX < (canvas.width - game.paddleWidth)) {
             game.paddleX += 8;
         }
 
-        if (game.leftPressed) {
+        if (game.leftPressed && game.paddleX > 0) {
             game.paddleX -= 8;
         }
         game.x += dx;
@@ -42,6 +51,7 @@
     function render() {
         drawTheBall();
         drawThePaddle();
+        gameOver()
     }
 
     function drawTheBall() {
@@ -78,12 +88,20 @@
         }
     }
 
+    function gameOver() {
+        if (game.y + dy > canvas.height - game.ballRadius) {
+            window.cancelAnimationFrame(game.stopMain);
+            document.location.reload();
+        }
+    }
+
     function main(tFrame) {
         game.stopMain = window.requestAnimationFrame(main);
         // main loop content
         update(tFrame);
         render()
     }
+
     main(); // start the cycle
 })();
 
