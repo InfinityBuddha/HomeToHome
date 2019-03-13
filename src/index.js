@@ -18,21 +18,18 @@
         leftPressed: false
     };
 
-    function update(tFrame) {
-        game.stopMain = tFrame;
+    function update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if(game.x + dx > canvas.width-game.ballRadius || game.x + dx < game.ballRadius) {
+        if (game.x + dx > canvas.width - game.ballRadius || game.x + dx < game.ballRadius) {
             dx = -dx;
         }
-        if(game.y + dy < game.ballRadius) {
+        if (game.y + dy < game.ballRadius) {
             dy = -dy;
         }
-        else if(game.y + dy > canvas.height-game.ballRadius) {
-            console.log('sdfsdlfls');
-            if(game.x > game.paddleX && game.x < game.paddleX + game.paddleWidth) {
+        if (game.y + dy > canvas.height - 11) {
+            if (game.x > game.paddleX && game.x < game.paddleX + game.paddleWidth) {
                 dy = -dy;
-            }
-            else {
+            } else {
                 gameOver()
             }
         }
@@ -91,6 +88,7 @@
     function gameOver() {
         if (game.y + dy > canvas.height - game.ballRadius) {
             window.cancelAnimationFrame(game.stopMain);
+            alert('game');
             document.location.reload();
         }
     }
